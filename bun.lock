@@ -6,6 +6,7 @@
       "name": "TrueK-Inspection",
       "dependencies": {
         "@hookform/resolvers": "^5.0.1",
+        "@paddle/paddle-js": "^1.6.2",
         "@paypal/react-paypal-js": "^8.8.3",
         "@prisma/adapter-pg": "^7.3.0",
         "@prisma/client": "^7.3.0",
@@ -187,6 +188,8 @@
     "@oven/bun-windows-x64": ["@oven/bun-windows-x64@1.2.14", "", { "os": "win32", "cpu": "x64" }, "sha512-Zur1ecPTYOURe5USpC/EjbquHloAehoW2iWg4A2SMNg30MilykaL2l3MjZDuDgHWECmRFRyKQgMWkgozVL/6uw=="],
 
     "@oven/bun-windows-x64-baseline": ["@oven/bun-windows-x64-baseline@1.2.14", "", { "os": "win32", "cpu": "x64" }, "sha512-4uXxPVTznUdQjsW9RBp6JybwhCZdt+mu4kJSpn1qWh6dCwDQhYvkCfako6x1FYW0+eZJEucwyyC36o1tbq2c+A=="],
+
+    "@paddle/paddle-js": ["@paddle/paddle-js@1.6.2", "", {}, "sha512-nx1NXCzwWUWjf0iaRDiXZlfWgFjNZ6996RFcTDk0G0ggzrh514Zsc6jGTPOUGdLB1sYJXVQiKKoNLoKoXhH+sA=="],
 
     "@paypal/paypal-js": ["@paypal/paypal-js@8.2.0", "", { "dependencies": { "promise-polyfill": "^8.3.0" } }, "sha512-hLg5wNORW3WiyMiRNJOm6cN2IqjPlClpxd971bEdm0LNpbbejQZYtesb0/0arTnySSbGcxg7MxjkZ/N5Z5qBNQ=="],
 
