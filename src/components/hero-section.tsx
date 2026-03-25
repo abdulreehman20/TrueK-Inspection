@@ -20,7 +20,7 @@ export const HeroSection = () => {
             viewport={{ once: true }} // Runs only once
             className="h1"
           >
-            Get a Clear Picture <span className="text-red-600">Before</span> You
+            Get a Clear Picture <span className="text-[#87CEEB]">Before</span> You
             Buy
           </motion.h1>
           <motion.p
@@ -42,9 +42,9 @@ export const HeroSection = () => {
             className="flex gap-4 justify-center xl:justify-start"
           >
             <Link href="#report">
-              <Button className="px-6 py-3 text-lg font-semibold bg-red-600 hover:bg-red-700 rounded-lg shadow-md">
-                Get Report
-              </Button>
+              <Button className="px-6 py-3 text-lg font-semibold bg-[#87CEEB] text-white hover:bg-[#70c1e3] rounded-lg shadow-md border-none">
+  Get Report
+</Button>
             </Link>
             <Link href="#about-us">
               <Button className="px-6 py-3 text-lg font-semibold bg-gray-800 text-white hover:bg-gray-900 rounded-lg shadow-md">

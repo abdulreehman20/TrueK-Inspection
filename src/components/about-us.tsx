@@ -102,7 +102,8 @@ export const AboutUs = () => {
               viewport={{ once: true, amount: 0.6 }}
             >
               <Link href="#report">
-                <Button className="bg-red-600 text-white text-lg font-semibold hover:bg-red-500 rounded-lg shadow-md">
+                {/* 👇 CHANGED: bg-red-600/hover:bg-red-500 to Sky Blue colors */}
+                <Button className="bg-[#87CEEB] text-white text-lg font-semibold hover:bg-[#70c1e3] rounded-lg shadow-md border-none">
                   Get Your Report
                 </Button>
               </Link>
@@ -147,9 +148,9 @@ export const AboutUs = () => {
             viewport={{ once: true, amount: 0.6 }}
             className="flex flex-col md:flex-row gap-4 w-full max-w-2xl mx-auto"
           >
-            <Card className="">
+            <Card className="border-t-4 border-[#87CEEB]"> {/* Added a subtle blue top border */}
               <CardHeader>
-                <CardTitle>Vision</CardTitle>
+                <CardTitle className="text-[#87CEEB]">Vision</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
@@ -157,9 +158,9 @@ export const AboutUs = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="">
+            <Card className="border-t-4 border-[#87CEEB]"> {/* Added a subtle blue top border */}
               <CardHeader>
-                <CardTitle>Mission</CardTitle>
+                <CardTitle className="text-[#87CEEB]">Mission</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>

@@ -38,29 +38,31 @@ const formSchema = z.object({
 
 export const InspectionReportForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { firstName, lastName, email, vnNumber, setUserData } = useUserStore();
+  const { setUserData } = useUserStore();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: firstName || "",
-      lastName: lastName || "",
-      email: email || "",
-      vnnumber: vnNumber || "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      vnnumber: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
 
-    // Store user data in Zustand
     setUserData({
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
       vnNumber: values.vnnumber,
     });
+
+    localStorage.setItem("temp_vin", values.vnnumber);
+    localStorage.setItem("temp_name", `${values.firstName} ${values.lastName}`);
 
     try {
       const response = await handleReportRequest({
@@ -72,26 +74,15 @@ export const InspectionReportForm = () => {
 
       if (response.success === true) {
         toast.success("Form Submitted", {
-          description: "Thank you for submitting the form.",
           style: {
-            backgroundColor: "#ed1d24",
+            backgroundColor: "#87CEEB", // Changed toast color to Sky Blue
             color: "#fff",
           }
         });
-
-        // Only reset form after successful submission
-        form.reset();
-
-        // Redirect to pricing page
         router.push("/pricing");
       } else {
-        toast.error("Error", {
-          description: "An error occurred. Please try again.",
-          style: {
-            backgroundColor: "#ed1d24",
-            color: "#fff",
-          },
-        });
+        setIsSubmitting(false);
+        toast.error("Error submitting form");
       }
     } catch (error: any) {
       setIsSubmitting(false);
@@ -111,12 +102,11 @@ export const InspectionReportForm = () => {
         className="container mx-auto max-w-6xl p-8 rounded-lg shadow-md flex flex-col lg:flex-row gap-12"
         id="get-report"
       >
-        {/* Left Side: Image and Content */}
         <div className="flex-1 flex flex-col justify-center">
           <div className="text-center lg:text-left">
             <h3 className="h2">TrueK Inspection Service</h3>
             <p className="text-lg text-gray-600">
-              we <span className="font-bold text-red-600">ensure</span> your car
+              we <span className="font-bold text-[#87CEEB]">ensure</span> your car
               is in perfect condition.
             </p>
           </div>
@@ -131,25 +121,21 @@ export const InspectionReportForm = () => {
           </div>
         </div>
 
-        {/* Right Side: Form */}
         <div className="flex-1">
           <h2 className="h2">Get Your Report now</h2>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* First Name Field */}
               <FormField
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black font-semibold">
-                      First Name
-                    </FormLabel>
+                    <FormLabel className="text-black font-semibold">First Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter First Name"
                         {...field}
-                        className="focus:ring-red-500"
+                        className="focus:ring-[#87CEEB]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -157,20 +143,17 @@ export const InspectionReportForm = () => {
                 )}
               />
 
-              {/* Last Name Field */}
               <FormField
                 control={form.control}
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black font-semibold">
-                      Last Name
-                    </FormLabel>
+                    <FormLabel className="text-black font-semibold">Last Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter Last Name"
                         {...field}
-                        className="focus:ring-red-500"
+                        className="focus:ring-[#87CEEB]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -178,20 +161,17 @@ export const InspectionReportForm = () => {
                 )}
               />
 
-              {/* Email Field */}
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black font-semibold">
-                      Email
-                    </FormLabel>
+                    <FormLabel className="text-black font-semibold">Email</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter Your Email"
                         {...field}
-                        className="focus:ring-red-500"
+                        className="focus:ring-[#87CEEB]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -199,20 +179,17 @@ export const InspectionReportForm = () => {
                 )}
               />
 
-              {/* Car VIN Number Field */}
               <FormField
                 control={form.control}
                 name="vnnumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black font-semibold">
-                      Car VIN Number
-                    </FormLabel>
+                    <FormLabel className="text-black font-semibold">Car VIN Number</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter VIN Number"
                         {...field}
-                        className="focus:ring-red-500"
+                        className="focus:ring-[#87CEEB]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -220,12 +197,11 @@ export const InspectionReportForm = () => {
                 )}
               />
 
-              {/* Submit Button */}
               <div>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-fit bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-fit bg-[#87CEEB] hover:bg-[#70c1e3] text-white font-semibold py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed border-none"
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
