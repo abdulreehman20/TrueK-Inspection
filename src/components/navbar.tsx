@@ -34,17 +34,17 @@ export const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between py-5 px-4">
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-bold">
-          {/* <Image
-            src={"/logo/our-logo.PNG"}
-            alt="Logo"
-            width={180}
-            height={180}
-            className="object-contain"
-          /> */}
-          TrueK Inspection
-        </Link>
+    {/* Logo */}
+<Link href="/" className="flex items-center gap-2 text-2xl font-bold">
+  <Image
+    src="/favicon.ico"
+    alt="TrueK Inspection Logo"
+    width={100}  // Adjust size as needed
+    height={100} // Adjust size as needed
+    className="object-contain"
+  />
+  <span>TrueK Inspection</span>
+</Link>
 
         {/* Desktop Navbar */}
         <div className="hidden md:flex items-center gap-8 font-semibold">
