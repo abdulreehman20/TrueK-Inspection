@@ -36,18 +36,18 @@ export async function sendPaymentSuccessEmails(data: {
 
     // 📧 EMAIL 4: To User
    await resend.emails.send({
-  from: process.env.RESEND_EMAIL || "CarK Inspection <noreply@carkinspection.com>",
+  from: process.env.RESEND_EMAIL || "Truek Inspection <noreply@Truekinspection.com>",
   to: data.email,
-  subject: "Payment Successful - CarK",
+  subject: "Payment Successful - Truek",
   html: `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #00a8e8; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background-color: #ffffff;">
       <h2 style="background-color: #00a8e8; color: #ffffff; padding: 20px; text-align: center; margin: 0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
-        Payment Successful - CarK
+        Payment Successful - Truek
       </h2>
       <div style="padding: 20px; background-color: #ffffff;">
         <p style="font-size: 16px; color: #555;">
           Hello ${displayName},<br><br>
-          We have received your request to retrieve your CarK Car Inspection Report. Below are your request details:
+          We have received your request to retrieve your TruekInspection Report. Below are your request details:
         </p>
         <table style="width: 100%; border-collapse: collapse; background-color: #f0faff; color: #333; border-radius: 5px; overflow: hidden;">
           <tr>
@@ -71,11 +71,11 @@ export async function sendPaymentSuccessEmails(data: {
           Our team will process your request and email you the <strong>inspection report</strong> within just 6 working hours. If you need any further assistance, feel free to reach out.
         </p>
         <p style="font-size: 16px; color: #555;">
-          For urgent inquiries, contact us at <a href="mailto:contact@carkinspection.com" style="color: #00a8e8; text-decoration: none; font-weight: bold;">contact@carkinspection.com</a>.
+          For urgent inquiries, contact us at <a href="mailto:truekinspection.com" style="color: #00a8e8; text-decoration: none; font-weight: bold;">truekinspection.com</a>.
         </p>
       </div>
       <footer style="background-color: #00a8e8; padding: 15px; text-align: center; font-size: 12px; color: #ffffff; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
-        <strong>CarK Car Inspection</strong> | Ensuring Quality, One Car at a Time
+        <strong>Truek Car Inspection</strong> | Ensuring Quality, One Car at a Time
       </footer>
     </div>`,
 });
