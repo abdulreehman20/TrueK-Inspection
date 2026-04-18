@@ -29,10 +29,10 @@ export async function sendReportPreviewLinkEmail(params: {
       subject: "Your TrueK vehicle report is ready",
       html: `
         <div style="font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #b71c1c; margin-top: 0;">Thanks for your purchase, ${name}</h2>
+          <h2 style="color: #70c1e3; margin-top: 0;">Thanks for your purchase, ${name}</h2>
           <p>Your payment went through successfully. You can open your full vehicle history report anytime using the secure link below.</p>
           <p style="margin: 20px 0;">
-            <a href="${params.previewUrl}" style="display: inline-block; background: #b71c1c; color: #fff; text-decoration: none; padding: 14px 24px; border-radius: 8px; font-weight: bold;">
+            <a href="${params.previewUrl}" style="display: inline-block; background: #70c1e3; color: #fff; text-decoration: none; padding: 14px 24px; border-radius: 8px; font-weight: bold;">
               View your report
             </a>
           </p>
