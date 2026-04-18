@@ -10,6 +10,7 @@ interface UserState {
   clearUserData: () => void;
 }
 
+
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
