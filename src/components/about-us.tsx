@@ -28,7 +28,7 @@ export const AboutUs = () => {
           >
             <Image
               className="rounded-xl"
-              src="/images/about/car01.png"
+              src="/carimage/car03.png"
               width={600}
               height={448}
               alt="Car Inspection"

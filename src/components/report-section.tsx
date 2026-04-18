@@ -112,7 +112,7 @@ export const InspectionReportForm = () => {
           </div>
           <div className="mt-10">
             <Image
-              src="/carImage/3.png"
+              src="/carImage/car02.png"
               alt="Car Inspection"
               width={600}
               height={400}

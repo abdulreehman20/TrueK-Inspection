@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 export const Disclaimer = () => {
@@ -6,8 +5,10 @@ export const Disclaimer = () => {
     <div className="w-full bg-[#faf7f8] py-6">
       {/* Top Description */}
       <p className="text-center text-gray-700 text-base mb-4 px-2">
-        The TrueK Inspection Report includes information gathered from the
-        industry&aposs most known and trustworthy data providers and specialists.
+        The TrueK Inspection Report is compiled using data from the industry's
+        most trusted providers and specialists, including recognized authorities
+        such as ClearVin, ensuring the highest standards of accuracy and
+        reliability.
       </p>
 
       {/* Logos Row */}
@@ -20,12 +21,18 @@ export const Disclaimer = () => {
           height={200}
         />
         <Image
+          src="/companies/5.png"
+          alt="Kelley Blue Book"
+          className="h-16 object-contain"
+          width={150}
+          height={200}
+        />
+        <Image
           src="/companies/2.png"
           alt="Kelley Blue Book"
           className="h-16 object-contain"
           width={150}
           height={200}
-
         />
         <Image
           src="/companies/3.png"
@@ -33,7 +40,6 @@ export const Disclaimer = () => {
           className="h-10 object-contain"
           width={150}
           height={200}
-
         />
         <Image
           src="/companies/4.png"
@@ -41,7 +47,6 @@ export const Disclaimer = () => {
           className="h-10 object-contain"
           width={150}
           height={200}
-
         />
       </div>
 

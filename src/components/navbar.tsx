@@ -36,10 +36,10 @@ export const Navbar = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="TrueK Inspection Logo"
-            width={140} // Adjust size as needed
-            height={140} // Adjust size as needed
+            width={150} // Adjust size as needed
+            height={150} // Adjust size as needed
             className="object-contain"
           />
           {/* <span>TrueK Inspection</span> */}
