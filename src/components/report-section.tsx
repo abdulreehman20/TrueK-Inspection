@@ -75,11 +75,11 @@ export const InspectionReportForm = () => {
       if (response.success === true) {
         toast.success("Form Submitted", {
           style: {
-            backgroundColor: "#87CEEB", // Changed toast color to Sky Blue
+            backgroundColor: "#06c668",
             color: "#fff",
           }
         });
-        router.push("/pricing");
+        router.push("/check-vin");
       } else {
         setIsSubmitting(false);
         toast.error("Error submitting form");
@@ -106,7 +106,7 @@ export const InspectionReportForm = () => {
           <div className="text-center lg:text-left">
             <h3 className="h2">TrueK Inspection Service</h3>
             <p className="text-lg text-gray-600">
-              we <span className="font-bold text-[#87CEEB]">ensure</span> your car
+              we <span className="font-bold text-[#06c668]">ensure</span> your car
               is in perfect condition.
             </p>
           </div>
@@ -135,7 +135,7 @@ export const InspectionReportForm = () => {
                       <Input
                         placeholder="Enter First Name"
                         {...field}
-                        className="focus:ring-[#87CEEB]"
+                        className="focus:ring-[#06c668]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -153,7 +153,7 @@ export const InspectionReportForm = () => {
                       <Input
                         placeholder="Enter Last Name"
                         {...field}
-                        className="focus:ring-[#87CEEB]"
+                        className="focus:ring-[#06c668]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -171,7 +171,7 @@ export const InspectionReportForm = () => {
                       <Input
                         placeholder="Enter Your Email"
                         {...field}
-                        className="focus:ring-[#87CEEB]"
+                        className="focus:ring-[#06c668]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -189,7 +189,7 @@ export const InspectionReportForm = () => {
                       <Input
                         placeholder="Enter VIN Number"
                         {...field}
-                        className="focus:ring-[#87CEEB]"
+                        className="focus:ring-[#06c668]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -201,7 +201,7 @@ export const InspectionReportForm = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-fit bg-[#87CEEB] hover:bg-[#70c1e3] text-white font-semibold py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed border-none"
+                  className="w-fit bg-[#06c668] hover:bg-[#70c1e3] text-white font-semibold py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed border-none"
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>

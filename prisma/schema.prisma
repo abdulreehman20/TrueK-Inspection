@@ -45,6 +45,18 @@ model Contact {
   createdAt DateTime @default(now())
 }
 
+/// Time-limited token for full report preview (e.g. 24h after payment).
+model ReportPreviewToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  html      String   @db.Text
+  vin       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt])
+}
+
 // model User {
 //   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 //   clerkId   String   @unique

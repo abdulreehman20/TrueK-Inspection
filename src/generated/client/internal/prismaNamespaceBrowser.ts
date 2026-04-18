@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Report: 'Report',
   Payment: 'Payment',
-  Contact: 'Contact'
+  Contact: 'Contact',
+  ReportPreviewToken: 'ReportPreviewToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -109,6 +110,18 @@ export const ContactScalarFieldEnum = {
 } as const
 
 export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const ReportPreviewTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  html: 'html',
+  vin: 'vin',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ReportPreviewTokenScalarFieldEnum = (typeof ReportPreviewTokenScalarFieldEnum)[keyof typeof ReportPreviewTokenScalarFieldEnum]
 
 
 export const SortOrder = {

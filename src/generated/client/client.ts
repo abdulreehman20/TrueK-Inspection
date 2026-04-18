@@ -54,3 +54,8 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type Contact = Prisma.ContactModel
+/**
+ * Model ReportPreviewToken
+ * Time-limited token for full report preview (e.g. 24h after payment).
+ */
+export type ReportPreviewToken = Prisma.ReportPreviewTokenModel

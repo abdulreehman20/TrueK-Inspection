@@ -18,10 +18,10 @@ export const HeroSection = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }} // Runs only once
-            className="h1"
+            className="h1 text-[#171717]"
           >
-            Get a Clear Picture <span className="text-[#87CEEB]">Before</span> You
-            Buy
+            Get a Clear Picture <span className="text-[#06c668]">Before</span>{" "}
+            You Buy
           </motion.h1>
           <motion.p
             variants={fadeIn("down", 0.3)}
@@ -42,9 +42,9 @@ export const HeroSection = () => {
             className="flex gap-4 justify-center xl:justify-start"
           >
             <Link href="#report">
-              <Button className="px-6 py-3 text-lg font-semibold bg-[#87CEEB] text-white hover:bg-[#70c1e3] rounded-lg shadow-md border-none">
-  Get Report
-</Button>
+              <Button className="px-6 py-3 text-lg font-semibold bg-[#06c668] text-white hover:bg-[#70c1e3] rounded-lg shadow-md border-none">
+                Get Report
+              </Button>
             </Link>
             <Link href="#about-us">
               <Button className="px-6 py-3 text-lg font-semibold bg-gray-800 text-white hover:bg-gray-900 rounded-lg shadow-md">

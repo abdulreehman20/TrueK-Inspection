@@ -11,4 +11,5 @@
 export type * from './models/Report'
 export type * from './models/Payment'
 export type * from './models/Contact'
+export type * from './models/ReportPreviewToken'
 export type * from './commonInputTypes'

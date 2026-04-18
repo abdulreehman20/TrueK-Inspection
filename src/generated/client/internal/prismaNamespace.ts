@@ -386,7 +386,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Report: 'Report',
   Payment: 'Payment',
-  Contact: 'Contact'
+  Contact: 'Contact',
+  ReportPreviewToken: 'ReportPreviewToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "report" | "payment" | "contact"
+    modelProps: "report" | "payment" | "contact" | "reportPreviewToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -628,6 +629,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ReportPreviewToken: {
+      payload: Prisma.$ReportPreviewTokenPayload<ExtArgs>
+      fields: Prisma.ReportPreviewTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReportPreviewTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReportPreviewTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.ReportPreviewTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReportPreviewTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>
+        }
+        findMany: {
+          args: Prisma.ReportPreviewTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>[]
+        }
+        create: {
+          args: Prisma.ReportPreviewTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>
+        }
+        createMany: {
+          args: Prisma.ReportPreviewTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReportPreviewTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.ReportPreviewTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>
+        }
+        update: {
+          args: Prisma.ReportPreviewTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReportPreviewTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReportPreviewTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReportPreviewTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReportPreviewTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPreviewTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.ReportPreviewTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReportPreviewToken>
+        }
+        groupBy: {
+          args: Prisma.ReportPreviewTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReportPreviewTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReportPreviewTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReportPreviewTokenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -704,6 +779,18 @@ export const ContactScalarFieldEnum = {
 } as const
 
 export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const ReportPreviewTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  html: 'html',
+  vin: 'vin',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ReportPreviewTokenScalarFieldEnum = (typeof ReportPreviewTokenScalarFieldEnum)[keyof typeof ReportPreviewTokenScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -903,6 +990,7 @@ export type GlobalOmitConfig = {
   report?: Prisma.ReportOmit
   payment?: Prisma.PaymentOmit
   contact?: Prisma.ContactOmit
+  reportPreviewToken?: Prisma.ReportPreviewTokenOmit
 }
 
 /* Types for Logging */

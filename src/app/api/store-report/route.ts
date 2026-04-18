@@ -1,46 +1,53 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomBytes } from "crypto";
+import db from "@/lib/db";
 
-// In-memory store: token → { html, vin, expiresAt }
-// Next.js module-level variables persist across requests in the same process.
-const reportStore = new Map<
-  string,
-  { html: string; vin: string; expiresAt: number }
->();
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+function generateToken(): string {
+  return randomBytes(32).toString("hex");
+}
 
 // ── POST /api/store-report ───────────────────────────────────────────────────
-// Body: { html: string, vin: string }
-// Returns: { token: string }
+// Body: { html: string, vin?: string }
+// Returns: { token: string } — token valid for 24 hours, reusable until expiry.
 export async function POST(req: NextRequest) {
   try {
-    const { html, vin } = await req.json();
+    const body = await req.json();
+    const { html, vin } = body as { html?: unknown; vin?: unknown };
 
     if (!html || typeof html !== "string") {
       return NextResponse.json({ error: "Missing html" }, { status: 400 });
     }
 
-    // One-time token – 32 hex chars
-    const token = crypto.randomUUID().replace(/-/g, "");
+    const token = generateToken();
+    const expiresAt = new Date(Date.now() + ONE_DAY_MS);
 
-    // Expire after 30 minutes to avoid unbounded memory growth
-    reportStore.set(token, {
-      html,
-      vin: vin || "N/A",
-      expiresAt: Date.now() + 30 * 60 * 1000,
+    await db.reportPreviewToken.create({
+      data: {
+        token,
+        html,
+        vin: typeof vin === "string" && vin.trim() ? vin.trim() : "N/A",
+        expiresAt,
+      },
     });
 
-    // Opportunistically purge expired entries
-    for (const [k, v] of reportStore.entries()) {
-      if (v.expiresAt < Date.now()) reportStore.delete(k);
-    }
+    void db.reportPreviewToken
+      .deleteMany({ where: { expiresAt: { lt: new Date() } } })
+      .catch(() => {});
 
     return NextResponse.json({ token });
-  } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  } catch (e) {
+    console.error("[store-report] POST", e);
+    return NextResponse.json(
+      { error: "Failed to store report" },
+      { status: 500 }
+    );
   }
 }
 
 // ── GET /api/store-report?token=xxx ─────────────────────────────────────────
-// Returns: { html: string, vin: string } and removes the entry (one-time use)
+// Returns { html, vin } while token is valid (does not consume the token).
 export async function GET(req: NextRequest) {
   const token = req.nextUrl.searchParams.get("token");
 
@@ -48,19 +55,30 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing token" }, { status: 400 });
   }
 
-  const entry = reportStore.get(token);
+  try {
+    const row = await db.reportPreviewToken.findUnique({
+      where: { token },
+      select: { html: true, vin: true, expiresAt: true },
+    });
 
-  if (!entry) {
-    return NextResponse.json({ error: "Not found or expired" }, { status: 404 });
+    if (!row) {
+      return NextResponse.json(
+        { error: "Not found or expired" },
+        { status: 404 }
+      );
+    }
+
+    if (row.expiresAt < new Date()) {
+      void db.reportPreviewToken.delete({ where: { token } }).catch(() => {});
+      return NextResponse.json({ error: "Token expired" }, { status: 410 });
+    }
+
+    return NextResponse.json({ html: row.html, vin: row.vin });
+  } catch (e) {
+    console.error("[store-report] GET", e);
+    return NextResponse.json(
+      { error: "Failed to load report" },
+      { status: 500 }
+    );
   }
-
-  if (entry.expiresAt < Date.now()) {
-    reportStore.delete(token);
-    return NextResponse.json({ error: "Token expired" }, { status: 410 });
-  }
-
-  // Delete after retrieval – one-time use
-  reportStore.delete(token);
-
-  return NextResponse.json({ html: entry.html, vin: entry.vin });
 }

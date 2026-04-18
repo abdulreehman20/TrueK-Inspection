@@ -39,28 +39,7 @@ export async function POST(req: Request) {
         `,
       });
 
-      // 📧 EMAIL 4: To User (Receipt/Confirmation)
-      await resend.emails.send({
-        from: process.env.RESEND_EMAIL || "TrueK Inspection <noreply@truekinspection.com>",
-        to: customerEmail,
-        subject: "We have received your payment - TrueK",
-        html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px;">
-            <h2 style="background-color: #d32f2f; color: #fff; padding: 15px; text-align: center; margin: 0;">
-              Payment Received
-            </h2>
-            <div style="padding: 20px; background-color: #ffffff;">
-              <p>Hello ${customerName},</p>
-              <p>We have received your payment for the TrueK Inspection Report.</p>
-              <table style="width: 100%; border-collapse: collapse; background-color: #f8f9fa;">
-                <tr><td style="padding: 10px; background-color: #d32f2f; color: #fff; font-weight: bold;">VIN:</td><td style="padding: 10px;">${vin}</td></tr>
-                <tr><td style="padding: 10px; background-color: #d32f2f; color: #fff; font-weight: bold;">Order ID:</td><td style="padding: 10px;">${orderId}</td></tr>
-              </table>
-              <p>We will email you the report within 6 working hours.</p>
-            </div>
-          </div>
-        `,
-      });
+      // User-facing receipt + report link is sent from `/check-vin` after checkout
     } catch (e) {
       console.error("Email failed", e);
     }

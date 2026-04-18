@@ -1,5 +1,7 @@
 "use server";
 
+import { extractVehicleSummaryFromClearVinHtml } from "@/lib/clearvin-vehicle-summary";
+
 /**
  * Fetches a full HTML vehicle history report from the ClearVIN API.
  *
@@ -42,7 +44,7 @@ export async function fetchClearVinReport(vin: string): Promise<{
     if (!response.ok) {
       const responseText = await response.text().catch(() => "");
       console.error(
-        `[ClearVIN] API error ${response.status}: ${responseText.slice(0, 300)}`
+        `[ClearVIN] API error ${response.status}: ${responseText.slice(0, 300)}`,
       );
       return {
         success: false,
@@ -62,7 +64,27 @@ export async function fetchClearVinReport(vin: string): Promise<{
     console.error("[ClearVIN] Fetch failed:", message);
     return {
       success: false,
-      error: "Failed to fetch report. Please contact support with your order ID.",
+      error:
+        "Failed to fetch report. Please contact support with your order ID.",
     };
   }
+}
+
+/**
+ * Confirms ClearVIN returns a report for this VIN and extracts display fields.
+ * Does not return HTML to the client (verification + summary only).
+ */
+export async function verifyClearVinVin(vin: string): Promise<{
+  success: boolean;
+  year?: string;
+  make?: string;
+  model?: string;
+  error?: string;
+}> {
+  const res = await fetchClearVinReport(vin);
+  if (!res.success || !res.html) {
+    return { success: false, error: res.error };
+  }
+  const { year, make, model } = extractVehicleSummaryFromClearVinHtml(res.html);
+  return { success: true, year, make, model };
 }

@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -34,17 +33,17 @@ export const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between py-5 px-4">
-    {/* Logo */}
-<Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-  <Image
-    src="/favicon.ico"
-    alt="TrueK Inspection Logo"
-    width={100}  // Adjust size as needed
-    height={100} // Adjust size as needed
-    className="object-contain"
-  />
-  {/* <span>TrueK Inspection</span> */}
-</Link>
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
+          <Image
+            src="/logo.jpg"
+            alt="TrueK Inspection Logo"
+            width={140} // Adjust size as needed
+            height={140} // Adjust size as needed
+            className="object-contain"
+          />
+          {/* <span>TrueK Inspection</span> */}
+        </Link>
 
         {/* Desktop Navbar */}
         <div className="hidden md:flex items-center gap-8 font-semibold">
@@ -115,7 +114,10 @@ export const Navbar = () => {
               >
                 Testimonial
               </Link>
-              <Link href="/#pricing" className="text-base hover:text-custom_red">
+              <Link
+                href="/#pricing"
+                className="text-base hover:text-custom_red"
+              >
                 Pricing
               </Link>
               <Link

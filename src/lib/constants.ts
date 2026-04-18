@@ -30,6 +30,11 @@ export const socialLinks = [
   { icon: FaXRay, href: "https://TrueKinspection.com", label: "Twitter" },
 ];
 
+/** Paddle catalog price for the full vehicle report checkout. */
+export const PADDLE_REPORT_PRICE_ID =
+  process.env.NEXT_PUBLIC_PADDLE_PRICE_ID ||
+  "pri_01kmj8139rhqsreprqqjds5zcd";
+
 export const pricing = [
   {
     id: "10201",

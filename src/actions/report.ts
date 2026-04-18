@@ -49,7 +49,7 @@ export async function handleReportRequest(data: ReportRequest) {
             <table style="width: 100%; border-collapse: collapse; background-color: #f8f9fa;">
               <tr><td style="padding: 10px; font-weight: bold;">VIN Number:</td><td>${vnNumber}</td></tr>
             </table>
-            <p>You will receive the full report at this email address in 6 working hours after the payment.</p>
+            <p>Next, you will verify your VIN and can unlock the full report on our secure checkout page.</p>
           </div>
         </div>
       `,

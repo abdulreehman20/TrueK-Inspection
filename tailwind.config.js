@@ -54,8 +54,8 @@ module.exports = {
                 foreground: 'hsl(var(--destructive-foreground))'
             },
             custom_red: {
-                // 👇 CHANGED: Red to Sky Blue (Keeping the name to save you time)
-                DEFAULT: '#87CEEB', 
+                // 👇 CHANGED: Red to Green Blue (Keeping the name to save you time)
+                DEFAULT: '#06c668', 
                 foreground: 'hsl(var(--destructive-foreground))'
             },
             border: 'hsl(var(--border))',
