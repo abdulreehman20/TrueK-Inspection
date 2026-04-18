@@ -35,8 +35,10 @@ export default function PricingPage() {
   const [isFetchingReport, setIsFetchingReport] = useState(false);
 
   useEffect(() => {
-    initializePaddle({ 
-      environment: (process.env.NEXT_PUBLIC_PADDLE_ENV as "sandbox" | "production") || "sandbox",
+    initializePaddle({
+      environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "production"
+        ? "production"
+        : "sandbox",
       token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "",
       eventCallback: async (event: any) => {
         if (event.name === "checkout.completed") {
