@@ -31,7 +31,7 @@ export default function PricingPage() {
 
   useEffect(() => {
     initializePaddle({ 
-      environment: "production", 
+      environment: (process.env.NEXT_PUBLIC_PADDLE_ENV as "sandbox" | "production") || "sandbox", 
       token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN || "",
       eventCallback: async (event: any) => {
         if (event.name === "checkout.completed") {
