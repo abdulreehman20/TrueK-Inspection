@@ -6,20 +6,13 @@ export const Disclaimer = () => {
       {/* Top Description */}
       <p className="text-center text-gray-700 text-base mb-4 px-2">
         The TrueK Inspection Report is compiled using data from the industry's
-        most trusted providers and specialists, including recognized authorities
-        such as ClearVin, ensuring the highest standards of accuracy and
-        reliability.
+        most trusted providers and specialists, including ClearVin data and
+        Black Book market valuation references, ensuring high standards of
+        accuracy and reliability.
       </p>
 
       {/* Logos Row */}
       <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-8">
-        <Image
-          src="/companies/1.png"
-          alt="NMVTIS"
-          className="h-16 object-contain"
-          width={150}
-          height={200}
-        />
         <Image
           src="/companies/5.png"
           alt="Kelley Blue Book"
@@ -28,22 +21,8 @@ export const Disclaimer = () => {
           height={200}
         />
         <Image
-          src="/companies/2.png"
-          alt="Kelley Blue Book"
-          className="h-16 object-contain"
-          width={150}
-          height={200}
-        />
-        <Image
-          src="/companies/3.png"
-          alt="J.D. Power"
-          className="h-10 object-contain"
-          width={150}
-          height={200}
-        />
-        <Image
           src="/companies/4.png"
-          alt="NADA"
+          alt="Black Book"
           className="h-10 object-contain"
           width={150}
           height={200}
@@ -57,10 +36,9 @@ export const Disclaimer = () => {
         </h2>
         <div className="w-20 h-1 bg-red-600 rounded-full mb-6" />
         <p className="text-center text-lg font-semibold text-gray-900 max-w-4xl">
-          Dear loyal Customers, We are approved licensed resellers of NMVTIS
-          data supplier, and we solely employ SEO and Social Media Marketing to
-          drive visitors to our website by delivering accurate and comprehensive
-          information.
+          Dear loyal customers, our reports are prepared using licensed data
+          sources, including ClearVin and Black Book references, to provide
+          accurate and comprehensive vehicle information.
         </p>
       </div>
     </div>

@@ -16,7 +16,7 @@ export const FooterSection = () => {
             <p className="text-sm leading-relaxed text-gray-300">
               Get detailed VIN reports, vehicle specifications, and safety
               updates with Autoscheckup. Proudly serving customers across the
-              World.
+              United States.
             </p>
           </div>
 
@@ -55,6 +55,11 @@ export const FooterSection = () => {
               <li>
                 <Link href="/#contact" className="hover:text-white">
                   Contact us
+                </Link>
+              </li>
+              <li>
+                <Link href="/sample" className="hover:text-white">
+                  Sample report
                 </Link>
               </li>
             </ul>

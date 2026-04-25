@@ -138,6 +138,18 @@ export default function TermsAndConditions() {
                                 .
                             </p>
                         </section>
+
+                        <section id="nmvtis-disclaimer">
+                            <h2 className="text-2xl font-medium text-gray-800 mb-2">
+                                9. NMVTIS Notice
+                            </h2>
+                            <p className="text-gray-600">
+                                TrueK Inspection is not directly partnered with NMVTIS.
+                                NMVTIS-related records shown in reports are provided
+                                through licensed third-party data sources, including
+                                ClearVin.
+                            </p>
+                        </section>
                     </div>
                 </div>
             </div>

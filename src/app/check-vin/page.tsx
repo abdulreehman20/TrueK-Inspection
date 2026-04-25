@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   initializePaddle,
@@ -357,6 +358,14 @@ export default function CheckVinPage() {
                   Initializing secure payment…
                 </p>
               )}
+              <p className="max-w-md text-center text-xs text-gray-500">
+                NMVTIS-related records in this report are provided through
+                licensed data providers, including ClearVin.{" "}
+                <Link href="/terms#nmvtis-disclaimer" className="underline">
+                  Read full terms
+                </Link>
+                .
+              </p>
             </div>
           </div>
         )}
