@@ -63,7 +63,7 @@ export const HeroSection = () => {
           className="relative w-full max-w-[600px] mt-10 xl:mt-0"
         >
           <Image
-            src="/carImage/2.png"
+            src="/carImage/car1.png"
             alt="Car Rental"
             width={900}
             height={600}
