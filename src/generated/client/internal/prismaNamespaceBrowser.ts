@@ -117,6 +117,7 @@ export const ReportPreviewTokenScalarFieldEnum = {
   token: 'token',
   html: 'html',
   vin: 'vin',
+  clearvinReportId: 'clearvinReportId',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt'
 } as const

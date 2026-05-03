@@ -9,12 +9,16 @@ function generateToken(): string {
 }
 
 // ── POST /api/store-report ───────────────────────────────────────────────────
-// Body: { html: string, vin?: string }
+// Body: { html: string, vin?: string, clearvinReportId?: string }
 // Returns: { token: string } — token valid for 24 hours, reusable until expiry.
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { html, vin } = body as { html?: unknown; vin?: unknown };
+    const { html, vin, clearvinReportId } = body as {
+      html?: unknown;
+      vin?: unknown;
+      clearvinReportId?: unknown;
+    };
 
     if (!html || typeof html !== "string") {
       return NextResponse.json({ error: "Missing html" }, { status: 400 });
@@ -23,11 +27,17 @@ export async function POST(req: NextRequest) {
     const token = generateToken();
     const expiresAt = new Date(Date.now() + ONE_DAY_MS);
 
+    const reportIdStr =
+      typeof clearvinReportId === "string" && clearvinReportId.trim()
+        ? clearvinReportId.trim()
+        : null;
+
     await db.reportPreviewToken.create({
       data: {
         token,
         html,
         vin: typeof vin === "string" && vin.trim() ? vin.trim() : "N/A",
+        clearvinReportId: reportIdStr,
         expiresAt,
       },
     });

@@ -1,7 +1,7 @@
 generator client {
   provider   = "prisma-client"
   // Generate a JS-only client into src/generated/client
-  output     = "../src/generated/client"
+  output     = "../src/prisma/generated/client"
   engineType = "client"
 }
 
@@ -47,12 +47,14 @@ model Contact {
 
 /// Time-limited token for full report preview (e.g. 24h after payment).
 model ReportPreviewToken {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  html      String   @db.Text
-  vin       String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
+  id                String   @id @default(cuid())
+  token             String   @unique
+  html              String   @db.Text
+  vin               String
+  /// ClearVin report id when returned by the vendor API (enables free re-fetch by reportId).
+  clearvinReportId  String?
+  expiresAt         DateTime
+  createdAt         DateTime @default(now())
 
   @@index([expiresAt])
 }

@@ -1,78 +1,56 @@
 "use server";
 
+import { clearVinPreview, clearVinReport } from "@/lib/clearvin/client";
+import { ClearVinApiError } from "@/lib/clearvin/errors";
+import { extractVehicleSummaryFromClearVinPreview } from "@/lib/clearvin/extract-preview-vehicle";
 import { extractVehicleSummaryFromClearVinHtml } from "@/lib/clearvin-vehicle-summary";
+import { getVinValidationError, normalizeVin } from "@/lib/vin-validation";
+
+function mapClearVinFailure(e: unknown): string {
+  if (e instanceof ClearVinApiError) {
+    return e.upstreamMessage;
+  }
+  const message = e instanceof Error ? e.message : "Unknown error";
+  console.error("[ClearVIN]", message);
+  return "Failed to reach ClearVin. Please try again or contact support.";
+}
 
 /**
- * Fetches a full HTML vehicle history report from the ClearVIN API.
- *
- * Endpoint: GET https://www.clearvin.com/rest/vendor/report
- * Params:   ?vin={vin}&format=html
- * Headers:  Authorization: Bearer <token>
- *
- * Returns the raw HTML string on success, throws on failure.
+ * Fetches a full HTML vehicle history report from the ClearVin API (v2.0).
+ * Uses email/password auth on the server (JWT, auto-refresh before expiry).
  */
 export async function fetchClearVinReport(vin: string): Promise<{
   success: boolean;
   html?: string;
+  reportId?: string;
   error?: string;
 }> {
-  if (!vin || vin.trim() === "") {
-    return { success: false, error: "VIN number is required." };
+  const vinError = getVinValidationError(vin);
+  if (vinError) {
+    return { success: false, error: vinError };
   }
 
-  const token = process.env.CLEARVIN_API_TOKEN;
-
-  if (!token) {
-    console.error("[ClearVIN] CLEARVIN_API_TOKEN is not set");
-    return { success: false, error: "API configuration error." };
-  }
+  const normalized = normalizeVin(vin);
 
   try {
-    const url = `https://www.clearvin.com/rest/vendor/report?vin=${encodeURIComponent(vin.trim())}&format=html`;
-
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "text/html",
-        Accept: "text/html, application/json",
-      },
-      // 30-second timeout via AbortSignal
-      signal: AbortSignal.timeout(30_000),
-    });
-
-    if (!response.ok) {
-      const responseText = await response.text().catch(() => "");
-      console.error(
-        `[ClearVIN] API error ${response.status}: ${responseText.slice(0, 300)}`,
-      );
-      return {
-        success: false,
-        error: `ClearVIN API returned status ${response.status}. Please contact support.`,
-      };
+    const result = await clearVinReport({ vin: normalized, format: "html" });
+    const html = result.text?.trim() ?? "";
+    if (!html) {
+      return { success: false, error: "Empty report received from ClearVin." };
     }
-
-    const html = await response.text();
-
-    if (!html || html.trim().length === 0) {
-      return { success: false, error: "Empty report received from ClearVIN." };
-    }
-
-    return { success: true, html };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    console.error("[ClearVIN] Fetch failed:", message);
     return {
-      success: false,
-      error:
-        "Failed to fetch report. Please contact support with your order ID.",
+      success: true,
+      html,
+      reportId: result.reportId,
     };
+  } catch (e) {
+    console.error("[ClearVIN] fetchClearVinReport:", e);
+    return { success: false, error: mapClearVinFailure(e) };
   }
 }
 
 /**
- * Confirms ClearVIN returns a report for this VIN and extracts display fields.
- * Does not return HTML to the client (verification + summary only).
+ * Confirms ClearVin recognizes this VIN using the preview endpoint (lighter than a full report).
  */
 export async function verifyClearVinVin(vin: string): Promise<{
   success: boolean;
@@ -81,10 +59,27 @@ export async function verifyClearVinVin(vin: string): Promise<{
   model?: string;
   error?: string;
 }> {
-  const res = await fetchClearVinReport(vin);
-  if (!res.success || !res.html) {
-    return { success: false, error: res.error };
+  const vinError = getVinValidationError(vin);
+  if (vinError) {
+    return { success: false, error: vinError };
   }
-  const { year, make, model } = extractVehicleSummaryFromClearVinHtml(res.html);
-  return { success: true, year, make, model };
+
+  const normalized = normalizeVin(vin);
+
+  try {
+    const { json, raw } = await clearVinPreview(normalized);
+    const fromJson = extractVehicleSummaryFromClearVinPreview(json);
+    const fromRaw =
+      typeof raw === "string" && raw.includes("<")
+        ? extractVehicleSummaryFromClearVinHtml(raw)
+        : {};
+    const year = fromJson.year ?? fromRaw.year;
+    const make = fromJson.make ?? fromRaw.make;
+    const model = fromJson.model ?? fromRaw.model;
+
+    return { success: true, year, make, model };
+  } catch (e) {
+    console.error("[ClearVIN] verifyClearVinVin:", e);
+    return { success: false, error: mapClearVinFailure(e) };
+  }
 }

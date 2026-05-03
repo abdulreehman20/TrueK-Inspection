@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -19,7 +19,8 @@ import { Navbar } from "@/components/navbar";
 import { FooterSection } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { fetchClearVinReport, verifyClearVinVin } from "@/actions/clearvin";
-import { sendReportPreviewLinkEmail } from "@/actions/send-report-preview-email";
+import { getVinValidationError, normalizeVin } from "@/lib/vin-validation";
+import { finalizeReportPurchase } from "@/actions/finalize-report-purchase";
 import { PADDLE_REPORT_PRICE_ID } from "@/lib/constants";
 import { useUserStore } from "@/store/user-store";
 
@@ -63,6 +64,10 @@ export default function CheckVinPage() {
 
   const [paddle, setPaddle] = useState<Paddle | undefined>();
   const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const vehicleRef = useRef<VehicleSummary | null>(null);
+  useEffect(() => {
+    vehicleRef.current = vehicle;
+  }, [vehicle]);
 
   // ── Verify VIN with ClearVIN (no report HTML on this page) ────────────────
   useEffect(() => {
@@ -75,13 +80,21 @@ export default function CheckVinPage() {
       return;
     }
 
-    setActiveVin(vin);
+    const normalizedVin = normalizeVin(vin);
+    setActiveVin(normalizedVin);
     setReportState("loading");
     setReportError("");
     setVehicle(null);
 
+    const clientVinError = getVinValidationError(normalizedVin);
+    if (clientVinError) {
+      setReportError(clientVinError);
+      setReportState("error");
+      return;
+    }
+
     void (async () => {
-      const result = await verifyClearVinVin(vin);
+      const result = await verifyClearVinVin(normalizedVin);
       if (result.success) {
         setVehicle({
           year: result.year,
@@ -117,13 +130,21 @@ export default function CheckVinPage() {
             "customer" in checkoutData && checkoutData.customer
               ? (checkoutData.customer as { email?: string; name?: string })
               : {};
-          const vin = readVinFromClient();
+          const vinRaw = readVinFromClient();
+          const vin = normalizeVin(vinRaw);
           const customerEmail = customer.email || readEmailFromClient();
           const displayName =
             readNameFromClient() || customer.name || "Customer";
 
           if (!vin) {
             console.error("[check-vin] checkout.completed but VIN missing");
+            return;
+          }
+
+          const vinValidation = getVinValidationError(vin);
+          if (vinValidation) {
+            console.error("[check-vin] invalid VIN after checkout:", vinValidation);
+            window.location.href = `/report-preview?error=fetch_failed&vin=${encodeURIComponent(vin)}`;
             return;
           }
 
@@ -140,36 +161,29 @@ export default function CheckVinPage() {
               return;
             }
 
-            const storeRes = await fetch("/api/store-report", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ html: result.html, vin }),
-            });
-
-            if (!storeRes.ok) {
-              console.error(
-                "[check-vin] store-report failed",
-                await storeRes.text(),
-              );
-              window.location.href = `/report-preview?error=store_failed&vin=${encodeURIComponent(vin)}`;
-              return;
-            }
-
-            const { token } = (await storeRes.json()) as { token?: string };
-            if (!token) {
-              window.location.href = `/report-preview?error=store_failed&vin=${encodeURIComponent(vin)}`;
-              return;
-            }
-
-            const previewPath = `/report-preview?token=${encodeURIComponent(token)}&vin=${encodeURIComponent(vin)}`;
-            const previewUrl = `${window.location.origin}${previewPath}`;
-
-            void sendReportPreviewLinkEmail({
-              to: customerEmail,
-              customerName: displayName,
-              previewUrl,
+            const vh = vehicleRef.current;
+            const finalize = await finalizeReportPurchase({
+              html: result.html,
               vin,
+              clearvinReportId: result.reportId,
+              customerEmail,
+              customerDisplayName: displayName,
+              paddleCheckoutData: checkoutData as unknown as Record<
+                string,
+                unknown
+              >,
+              vehicleYear: vh?.year,
+              vehicleMake: vh?.make,
+              vehicleModel: vh?.model,
             });
+
+            if (!finalize.success) {
+              console.error("[check-vin] finalize purchase:", finalize.error);
+              window.location.href = `/report-preview?error=store_failed&vin=${encodeURIComponent(vin)}`;
+              return;
+            }
+
+            const previewPath = `/report-preview?token=${encodeURIComponent(finalize.token)}&vin=${encodeURIComponent(vin)}`;
 
             if (!cancelled) {
               window.location.href = previewPath;
@@ -193,7 +207,7 @@ export default function CheckVinPage() {
 
   const openCheckout = () => {
     if (!paddle) return;
-    const vin = readVinFromClient() || activeVin;
+    const vin = normalizeVin(readVinFromClient() || activeVin);
     if (!vin) return;
     const customerEmail = readEmailFromClient();
 
@@ -277,8 +291,14 @@ export default function CheckVinPage() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  const vin = readVinFromClient() || activeVin;
+                  const vin = normalizeVin(readVinFromClient() || activeVin);
                   if (!vin) return;
+                  const err = getVinValidationError(vin);
+                  if (err) {
+                    setReportError(err);
+                    setReportState("error");
+                    return;
+                  }
                   setActiveVin(vin);
                   setReportState("loading");
                   setReportError("");

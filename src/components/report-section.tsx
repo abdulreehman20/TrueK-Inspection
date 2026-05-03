@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { handleReportRequest } from "@/actions/report";
 import { useRouter } from "next/navigation";
+import { zVinField, normalizeVin } from "@/lib/vin-validation";
 
 const formSchema = z.object({
   firstName: z
@@ -30,10 +31,7 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Last name must be at least 2 characters." }),
   email: z.string().min(2, { message: "Email must be at least 2 characters." }),
-  vnnumber: z
-    .string()
-    .min(17, { message: "VIN Number must be 17 characters." })
-    .max(17, { message: "VIN Number must be 17 characters." }),
+  vnnumber: zVinField,
 });
 
 export const InspectionReportForm = () => {
@@ -54,14 +52,15 @@ export const InspectionReportForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
 
+    const vinNorm = normalizeVin(values.vnnumber);
     setUserData({
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
-      vnNumber: values.vnnumber,
+      vnNumber: vinNorm,
     });
 
-    localStorage.setItem("temp_vin", values.vnnumber);
+    localStorage.setItem("temp_vin", vinNorm);
     localStorage.setItem("temp_name", `${values.firstName} ${values.lastName}`);
 
     try {
@@ -69,16 +68,11 @@ export const InspectionReportForm = () => {
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
-        vnNumber: values.vnnumber,
+        vnNumber: vinNorm,
       });
 
       if (response.success === true) {
-        toast.success("Form Submitted", {
-          style: {
-            backgroundColor: "#06c668",
-            color: "#fff",
-          }
-        });
+        toast.success("Form Submitted");
         router.push("/check-vin");
       } else {
         setIsSubmitting(false);

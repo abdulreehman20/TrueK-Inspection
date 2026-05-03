@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { handleContactForm } from "@/actions/contact";
+import { zVinField } from "@/lib/vin-validation";
 
 // Form Schema
 const formSchema = z.object({
@@ -29,10 +30,7 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  vnnumber: z
-    .string()
-    .min(17, { message: "VIN Number must be 17 characters." })
-    .max(17, { message: "VIN Number must be 17 characters." }),
+  vnnumber: zVinField,
   message: z
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
@@ -75,34 +73,20 @@ export const ContactSection = () => {
     try {
       const response = await handleContactForm(values);
 
-      if (response) {
-        console.log("Form submitted successfully");
+      if (response.success) {
         form.reset();
         toast.success("Form Submitted", {
           description: "Thank you for submitting the form.",
-          style: {
-            backgroundColor: "#ed1d24",
-            color: "#fff",
-          },
         });
       } else {
-        console.error("Failed to submit form");
         toast.error("Submission Failed", {
           description: "An error occurred. Please try again.",
-          style: {
-            backgroundColor: "#ed1d24",
-            color: "#fff",
-          },
         });
       }
     } catch (error) {
       console.error("Error submitting form", error);
       toast.error("Submission Error", {
         description: "An unexpected error occurred. Please try again later.",
-        style: {
-          backgroundColor: "#ed1d24",
-          color: "#fff",
-        },
       });
     } finally {
       setIsSubmitting(false);

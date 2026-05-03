@@ -29,6 +29,7 @@ export type ReportPreviewTokenMinAggregateOutputType = {
   token: string | null
   html: string | null
   vin: string | null
+  clearvinReportId: string | null
   expiresAt: Date | null
   createdAt: Date | null
 }
@@ -38,6 +39,7 @@ export type ReportPreviewTokenMaxAggregateOutputType = {
   token: string | null
   html: string | null
   vin: string | null
+  clearvinReportId: string | null
   expiresAt: Date | null
   createdAt: Date | null
 }
@@ -47,6 +49,7 @@ export type ReportPreviewTokenCountAggregateOutputType = {
   token: number
   html: number
   vin: number
+  clearvinReportId: number
   expiresAt: number
   createdAt: number
   _all: number
@@ -58,6 +61,7 @@ export type ReportPreviewTokenMinAggregateInputType = {
   token?: true
   html?: true
   vin?: true
+  clearvinReportId?: true
   expiresAt?: true
   createdAt?: true
 }
@@ -67,6 +71,7 @@ export type ReportPreviewTokenMaxAggregateInputType = {
   token?: true
   html?: true
   vin?: true
+  clearvinReportId?: true
   expiresAt?: true
   createdAt?: true
 }
@@ -76,6 +81,7 @@ export type ReportPreviewTokenCountAggregateInputType = {
   token?: true
   html?: true
   vin?: true
+  clearvinReportId?: true
   expiresAt?: true
   createdAt?: true
   _all?: true
@@ -158,6 +164,7 @@ export type ReportPreviewTokenGroupByOutputType = {
   token: string
   html: string
   vin: string
+  clearvinReportId: string | null
   expiresAt: Date
   createdAt: Date
   _count: ReportPreviewTokenCountAggregateOutputType | null
@@ -188,6 +195,7 @@ export type ReportPreviewTokenWhereInput = {
   token?: Prisma.StringFilter<"ReportPreviewToken"> | string
   html?: Prisma.StringFilter<"ReportPreviewToken"> | string
   vin?: Prisma.StringFilter<"ReportPreviewToken"> | string
+  clearvinReportId?: Prisma.StringNullableFilter<"ReportPreviewToken"> | string | null
   expiresAt?: Prisma.DateTimeFilter<"ReportPreviewToken"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"ReportPreviewToken"> | Date | string
 }
@@ -197,6 +205,7 @@ export type ReportPreviewTokenOrderByWithRelationInput = {
   token?: Prisma.SortOrder
   html?: Prisma.SortOrder
   vin?: Prisma.SortOrder
+  clearvinReportId?: Prisma.SortOrderInput | Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -209,6 +218,7 @@ export type ReportPreviewTokenWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ReportPreviewTokenWhereInput | Prisma.ReportPreviewTokenWhereInput[]
   html?: Prisma.StringFilter<"ReportPreviewToken"> | string
   vin?: Prisma.StringFilter<"ReportPreviewToken"> | string
+  clearvinReportId?: Prisma.StringNullableFilter<"ReportPreviewToken"> | string | null
   expiresAt?: Prisma.DateTimeFilter<"ReportPreviewToken"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"ReportPreviewToken"> | Date | string
 }, "id" | "token">
@@ -218,6 +228,7 @@ export type ReportPreviewTokenOrderByWithAggregationInput = {
   token?: Prisma.SortOrder
   html?: Prisma.SortOrder
   vin?: Prisma.SortOrder
+  clearvinReportId?: Prisma.SortOrderInput | Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ReportPreviewTokenCountOrderByAggregateInput
@@ -233,6 +244,7 @@ export type ReportPreviewTokenScalarWhereWithAggregatesInput = {
   token?: Prisma.StringWithAggregatesFilter<"ReportPreviewToken"> | string
   html?: Prisma.StringWithAggregatesFilter<"ReportPreviewToken"> | string
   vin?: Prisma.StringWithAggregatesFilter<"ReportPreviewToken"> | string
+  clearvinReportId?: Prisma.StringNullableWithAggregatesFilter<"ReportPreviewToken"> | string | null
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"ReportPreviewToken"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ReportPreviewToken"> | Date | string
 }
@@ -242,6 +254,7 @@ export type ReportPreviewTokenCreateInput = {
   token: string
   html: string
   vin: string
+  clearvinReportId?: string | null
   expiresAt: Date | string
   createdAt?: Date | string
 }
@@ -251,6 +264,7 @@ export type ReportPreviewTokenUncheckedCreateInput = {
   token: string
   html: string
   vin: string
+  clearvinReportId?: string | null
   expiresAt: Date | string
   createdAt?: Date | string
 }
@@ -260,6 +274,7 @@ export type ReportPreviewTokenUpdateInput = {
   token?: Prisma.StringFieldUpdateOperationsInput | string
   html?: Prisma.StringFieldUpdateOperationsInput | string
   vin?: Prisma.StringFieldUpdateOperationsInput | string
+  clearvinReportId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -269,6 +284,7 @@ export type ReportPreviewTokenUncheckedUpdateInput = {
   token?: Prisma.StringFieldUpdateOperationsInput | string
   html?: Prisma.StringFieldUpdateOperationsInput | string
   vin?: Prisma.StringFieldUpdateOperationsInput | string
+  clearvinReportId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -278,6 +294,7 @@ export type ReportPreviewTokenCreateManyInput = {
   token: string
   html: string
   vin: string
+  clearvinReportId?: string | null
   expiresAt: Date | string
   createdAt?: Date | string
 }
@@ -287,6 +304,7 @@ export type ReportPreviewTokenUpdateManyMutationInput = {
   token?: Prisma.StringFieldUpdateOperationsInput | string
   html?: Prisma.StringFieldUpdateOperationsInput | string
   vin?: Prisma.StringFieldUpdateOperationsInput | string
+  clearvinReportId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -296,6 +314,7 @@ export type ReportPreviewTokenUncheckedUpdateManyInput = {
   token?: Prisma.StringFieldUpdateOperationsInput | string
   html?: Prisma.StringFieldUpdateOperationsInput | string
   vin?: Prisma.StringFieldUpdateOperationsInput | string
+  clearvinReportId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -305,6 +324,7 @@ export type ReportPreviewTokenCountOrderByAggregateInput = {
   token?: Prisma.SortOrder
   html?: Prisma.SortOrder
   vin?: Prisma.SortOrder
+  clearvinReportId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -314,6 +334,7 @@ export type ReportPreviewTokenMaxOrderByAggregateInput = {
   token?: Prisma.SortOrder
   html?: Prisma.SortOrder
   vin?: Prisma.SortOrder
+  clearvinReportId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -323,6 +344,7 @@ export type ReportPreviewTokenMinOrderByAggregateInput = {
   token?: Prisma.SortOrder
   html?: Prisma.SortOrder
   vin?: Prisma.SortOrder
+  clearvinReportId?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -334,6 +356,7 @@ export type ReportPreviewTokenSelect<ExtArgs extends runtime.Types.Extensions.In
   token?: boolean
   html?: boolean
   vin?: boolean
+  clearvinReportId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["reportPreviewToken"]>
@@ -343,6 +366,7 @@ export type ReportPreviewTokenSelectCreateManyAndReturn<ExtArgs extends runtime.
   token?: boolean
   html?: boolean
   vin?: boolean
+  clearvinReportId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["reportPreviewToken"]>
@@ -352,6 +376,7 @@ export type ReportPreviewTokenSelectUpdateManyAndReturn<ExtArgs extends runtime.
   token?: boolean
   html?: boolean
   vin?: boolean
+  clearvinReportId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["reportPreviewToken"]>
@@ -361,11 +386,12 @@ export type ReportPreviewTokenSelectScalar = {
   token?: boolean
   html?: boolean
   vin?: boolean
+  clearvinReportId?: boolean
   expiresAt?: boolean
   createdAt?: boolean
 }
 
-export type ReportPreviewTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "token" | "html" | "vin" | "expiresAt" | "createdAt", ExtArgs["result"]["reportPreviewToken"]>
+export type ReportPreviewTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "token" | "html" | "vin" | "clearvinReportId" | "expiresAt" | "createdAt", ExtArgs["result"]["reportPreviewToken"]>
 
 export type $ReportPreviewTokenPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReportPreviewToken"
@@ -375,6 +401,10 @@ export type $ReportPreviewTokenPayload<ExtArgs extends runtime.Types.Extensions.
     token: string
     html: string
     vin: string
+    /**
+     * ClearVin report id when returned by the vendor API (enables free re-fetch by reportId).
+     */
+    clearvinReportId: string | null
     expiresAt: Date
     createdAt: Date
   }, ExtArgs["result"]["reportPreviewToken"]>
@@ -804,6 +834,7 @@ export interface ReportPreviewTokenFieldRefs {
   readonly token: Prisma.FieldRef<"ReportPreviewToken", 'String'>
   readonly html: Prisma.FieldRef<"ReportPreviewToken", 'String'>
   readonly vin: Prisma.FieldRef<"ReportPreviewToken", 'String'>
+  readonly clearvinReportId: Prisma.FieldRef<"ReportPreviewToken", 'String'>
   readonly expiresAt: Prisma.FieldRef<"ReportPreviewToken", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"ReportPreviewToken", 'DateTime'>
 }
